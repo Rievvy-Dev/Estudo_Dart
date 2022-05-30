@@ -126,6 +126,9 @@ void main() {
 
   Carro mercedes = Carro("Mercedes");
   Carro ferrari = Carro("Ferrari");
+
+  print("Carros ${ferrari.modelo} e ${mercedes.modelo}\n");
+  print("Valor usando get ${ferrari._valor}\n")
 }
 
 // Metodos e Classes
