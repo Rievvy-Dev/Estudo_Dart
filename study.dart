@@ -128,7 +128,26 @@ void main() {
   Carro ferrari = Carro("Ferrari");
 
   print("Carros ${ferrari.modelo} e ${mercedes.modelo}\n");
-  print("Valor usando get ${ferrari._valor}\n")
+  print("Valor usando get ${ferrari._valor}\n");
+
+  // Interfaces(Abstração), Herança e Polimorfismo
+
+  print("\n\t--- Interfaces(Abstract Class), Herança e Polimorfismo ---\n");
+
+  // Dart não tem interfaces. Tem Abstract Class.
+  print("\n\t--- Herança ---\n");
+
+  Thiago thiago = Thiago();
+  print(thiago
+      .falar()); // Aqui mesmo sem passar nenhum metodo na class, "Thiago" herdou "Falar" da classe "Pai"
+
+  print("\n\t--- Polimorfismo ---\n");
+
+  Pagamento pagamento = Pagar_com_boleto();
+  pagamento.pagar();
+
+  pagamento = Pagar_com_pix();
+  pagamento.pagar();
 }
 
 // Metodos e Classes
@@ -173,4 +192,66 @@ class Carro {
       _valor = valor; // Permitir alterações no atributo privado.
 
   Carro(this.modelo);
+}
+
+// Interfaces(Abstração), Polimorfismo e Abstração
+// Podemos colocar como se fosse um contrato, se eu criar uma class dizendo que tem que fazer algo para esta classe ser criada, quem assinar o contrato terá que fazer o que foi pedido.
+
+// Abstração ou Classes Abstratas
+abstract class Pessoa {
+  String comunicar();
+}
+
+class PessoaET implements Pessoa {
+  // A "PessoaET" tem que seguir o contrato da "Pessoa", que no caso é saber se comunicar, para poder implementar "Pessoa"
+  String comunicar() {
+    return "Ola Mundo"; // Aqui a "PessoaET" está seguindo o contrato passado pela classe abstrata Pessoa, passando assim uma frase.
+  }
+}
+
+class Pessoa_nao_ET implements Pessoa {
+  String comunicar() {
+    return "Bom dia";
+  }
+}
+
+// Herança
+
+// A herança é usada para classes herdarem coisas de outras classes
+class Pai {
+  String falar() {
+    return "Girias"; // Neste caso temos uma class "Pai", e o Pai fala Girias.
+  }
+}
+
+class Thiago extends Pai {
+  // Temos aqui sem passar nenhuma função, nenhum metodo uma class que herdou Girias da class "Pai" por ter usado o Extend.
+}
+
+// Polimorfismo
+
+abstract class Pagamento {
+  // Temos um contrato de pagamento
+  void
+      pagar(); // E a condição do contrato é que ele saiba pagar, independente da forma de pagamento.
+  // Qualquer pessoa que implementar este código tem que saber pagar
+}
+// Neste caso queremos que em determinado momento da execução essa classe possa mudar, por isso "Polimórfica"
+// Podemos mudar a forma de pagamento sem quebrar o sistema
+
+class Pagar_com_boleto implements Pagamento {
+  // Adicionando uma forma de pagamento que respeite o contrato.
+  void pagar() {
+    print("Pagando com boleto\n");
+  }
+}
+
+// Pela class ser polimórfica podemos mudar a forma de pagamento desde que a pessoa saiba pagar
+
+class Pagar_com_pix implements Pagamento {
+  // Foi criado uma segunda class que atende ao contrato, dessa forma temos uma Abstract class polimórfica, ou seja, pode ser mudada a qualquer momento dentro do código desde que atenda ao contrato.
+  void pagar() {
+    print(
+        "Pagando com pix\n"); // Quando a Classe Pagamento for chamada usando a classe "Pagar_com_pix", irá mudar, ou irá escolher dentre as implementações disponíveis.
+  }
 }
